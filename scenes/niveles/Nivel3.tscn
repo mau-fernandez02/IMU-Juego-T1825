@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cy1j1x5ue0xcx"]
+
+[ext_resource type="PackedScene" uid="uid://bd54eyj1qpp4a" path="res://objects/Jugador.tscn" id="1_ltxr7"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_yyk0y"]
+
+[node name="Nivel3" type="Node3D"]
+
+[node name="StaticBody3D" type="StaticBody3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="StaticBody3D"]
+shape = SubResource("WorldBoundaryShape3D_yyk0y")
+
+[node name="Jugador" parent="." instance=ExtResource("1_ltxr7")]
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 3.9289873, 0)

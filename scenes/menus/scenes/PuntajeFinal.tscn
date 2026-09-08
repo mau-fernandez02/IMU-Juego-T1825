@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://dtl7aaa0ky28h"]
+
+[ext_resource type="PackedScene" uid="uid://cnymdajj1vsqm" path="res://objects/platform.tscn" id="1_ngha2"]
+
+[node name="PuntajeFinal" type="Node3D"]
+
+[node name="platform" parent="." instance=ExtResource("1_ngha2")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 0, 0)

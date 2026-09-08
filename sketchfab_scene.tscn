@@ -1,0 +1,5 @@
+[gd_scene load_steps=2 format=3 uid="uid://ckss88c05axww"]
+
+[ext_resource type="PackedScene" uid="uid://b1kco8gysr34j" path="res://models/cute_baby_jaguar.glb" id="1_r57si"]
+
+[node name="Sketchfab_Scene" instance=ExtResource("1_r57si")]

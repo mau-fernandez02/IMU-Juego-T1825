@@ -1,0 +1,24 @@
+[gd_scene load_steps=4 format=3 uid="uid://bd54eyj1qpp4a"]
+
+[ext_resource type="Script" uid="uid://b6wosarcc7oll" path="res://objects/jugador_script.gd" id="1_7yfwb"]
+[ext_resource type="PackedScene" uid="uid://cudnpntfqjt8m" path="res://models/simon.glb" id="2_vkxko"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5e0co"]
+
+[node name="Jugador" type="CharacterBody3D"]
+script = ExtResource("1_7yfwb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_5e0co")
+
+[node name="simon" parent="." instance=ExtResource("2_vkxko")]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+
+[node name="CameraPivote" type="Node3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(0.87322843, 0.48731107, 0, -0.48731107, 0.87322843, 0, 0, 0, 1, 0, 1.1665552, 0)
+
+[node name="CamaraJugador" type="Camera3D" parent="CameraPivote"]
+unique_name_in_owner = true
+transform = Transform3D(-4.371139e-08, 0, -1, 0, 1, 0, 1, 0, -4.371139e-08, -5, 0, 0)

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bp0jjv0dv3l7g"]
+
+[ext_resource type="Script" uid="uid://bb8ywd7joe2yw" path="res://objects/flag.gd" id="1_ynrn3"]
+[ext_resource type="PackedScene" uid="uid://dtjvjdjl8cs6e" path="res://models/flag.glb" id="2_v2web"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_ynrn3"]
+
+[node name="Flag" type="Area3D"]
+script = ExtResource("1_ynrn3")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(2, 0, 0, 0, 2, 0, 0, 0, 2, 0, 1, 0)
+shape = SubResource("SphereShape3D_ynrn3")
+
+[node name="flag" parent="." instance=ExtResource("2_v2web")]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

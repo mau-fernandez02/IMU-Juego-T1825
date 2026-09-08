@@ -1,0 +1,119 @@
+[gd_scene load_steps=4 format=3 uid="uid://b0285nxf71e20"]
+
+[sub_resource type="GDScript" id="GDScript_gjspa"]
+script/source = "@tool
+
+extends Control
+
+@export var move_back_speed = 10 ## The speed of the knob returning to the center.
+@export var joystick_target: Node ## What the joystick controls.
+@export var target_speed = 10 ## The speed of the target.
+@export var secondary_range = false ## Joystick outer range for visuals.
+@export var secondary_color: Color = Color(1, 1, 1, 0.3) ## Color of the ring.
+
+@onready var joystick_scene := preload(\"res://addons/joystick_plugin/joystick.tscn\")
+
+# Called when the node enters the scene tree for the first time.
+func _ready() -> void:
+	if Engine.is_editor_hint():
+		return
+	var source := preload(\"res://addons/joystick_plugin/Joystick.tscn\").instantiate()
+	duplicate_children(source, self)
+	queue_redraw()
+
+func _draw() -> void:
+	if secondary_range:
+		draw_circle(Vector2(0, 0), 135, secondary_color)
+
+# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _process(delta: float) -> void:
+	pass
+
+func duplicate_children(source_node: Node, target_node: Node) -> void:
+	for child in source_node.get_children():
+		var copy = child.duplicate()
+		target_node.add_child(copy)
+"
+
+[sub_resource type="SphereMesh" id="SphereMesh_ew0fh"]
+
+[sub_resource type="GDScript" id="GDScript_w25ul"]
+script/source = "extends MeshInstance2D
+
+var dragging = false
+
+var out_of_bounds = false
+
+var direction
+
+var velocity
+
+@onready var position_var = $\"../joystick_range\".global_position
+
+@onready var parent = get_parent()
+
+var finger_index: int = -1
+
+func _input(event):
+	if event is InputEventScreenTouch:
+		if event.pressed:
+			var circle = mesh as SphereMesh
+			if circle:
+				if global_position.distance_to(event.position) <= 125:
+					dragging = true
+					finger_index = event.index
+		else:
+			if dragging and event.index == finger_index:
+				dragging = false
+				out_of_bounds = false
+				finger_index = -1
+	elif event is InputEventScreenDrag and dragging:
+		if position_var.distance_to(event.position) <= 125:
+			global_position = event.position
+			out_of_bounds = false
+			#print(\"false\")
+		else:
+			out_of_bounds = true
+			#print(\"true\")
+
+func _process(delta):
+	if !dragging:
+		global_position = lerp(global_position, position_var, parent.move_back_speed * delta)
+	if out_of_bounds:
+		var angle = $\"../joystick_range\".global_position.angle_to_point(get_global_mouse_position())
+		global_position.x = $\"../joystick_range\".global_position.x + cos(angle) * 125
+		global_position.y = $\"../joystick_range\".global_position.y + sin(angle) * 125
+	if dragging:
+		if parent.joystick_target == null:
+			push_error(\"Assign a target for the joystick to control\")
+			assert(false, \"Assign a target for the joystick to control\")
+		elif parent.joystick_target is Node3D:
+			push_error(\"The current target is 3D. Tweak the code in here\")
+			assert(false, \"The current target is 3D. Tweak the code in here\")
+		direction = (global_position - position_var).normalized()
+		velocity = direction * parent.target_speed
+		parent.joystick_target.global_position += velocity * delta * 30
+"
+
+[node name="Joystick" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_gjspa")
+
+[node name="joystick_range" type="MeshInstance2D" parent="."]
+self_modulate = Color(0, 0, 0, 0.137255)
+position = Vector2(229.85841, 524)
+scale = Vector2(250, 250)
+mesh = SubResource("SphereMesh_ew0fh")
+
+[node name="knob" type="MeshInstance2D" parent="."]
+self_modulate = Color(1, 1, 1, 0.137255)
+z_index = 1
+position = Vector2(229.85841, 524)
+scale = Vector2(90, 90)
+mesh = SubResource("SphereMesh_ew0fh")
+script = SubResource("GDScript_w25ul")

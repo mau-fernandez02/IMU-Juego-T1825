@@ -1,0 +1,104 @@
+[gd_scene load_steps=8 format=3 uid="uid://cfh8rp0578in7"]
+
+[ext_resource type="Texture2D" uid="uid://bdhpnfhqrthgv" path="res://sprites/BackgroudMenu.jpg" id="1_waeru"]
+[ext_resource type="Script" uid="uid://dba6rgtly1uwr" path="res://scenes/menus/Scripts/creditos_botones.gd" id="2_t5xkv"]
+[ext_resource type="FontFile" uid="uid://d0cxd77jybrcn" path="res://fonts/lilita_one_regular.ttf" id="3_pxt4k"]
+
+[sub_resource type="LabelSettings" id="LabelSettings_4rqy5"]
+font = ExtResource("3_pxt4k")
+font_size = 100
+
+[sub_resource type="LabelSettings" id="LabelSettings_rnov5"]
+font = ExtResource("3_pxt4k")
+font_size = 40
+
+[sub_resource type="LabelSettings" id="LabelSettings_vdi1b"]
+font = ExtResource("3_pxt4k")
+font_size = 35
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_ebbob"]
+bg_color = Color(0.0768358, 0.07683582, 0.076835774, 1)
+border_width_left = 1
+border_width_top = 4
+border_width_right = 1
+border_width_bottom = 4
+border_color = Color(0, 0, 0, 1)
+corner_radius_top_left = 25
+corner_radius_top_right = 25
+corner_radius_bottom_right = 25
+corner_radius_bottom_left = 25
+
+[node name="Creditos" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_waeru")
+expand_mode = 1
+
+[node name="ColorRect" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -383.0
+offset_right = 374.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0056611504, 0.0056611514, 0.00566115, 0.49411765)
+
+[node name="CreditosBotones" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -33.0
+offset_top = -11.5
+offset_right = 33.0
+offset_bottom = 11.5
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 30
+script = ExtResource("2_t5xkv")
+
+[node name="Titulo" type="Label" parent="CreditosBotones"]
+layout_mode = 2
+text = "SCIMU"
+label_settings = SubResource("LabelSettings_4rqy5")
+horizontal_alignment = 1
+
+[node name="Titulo2" type="Label" parent="CreditosBotones"]
+layout_mode = 2
+text = "(sociedad científica multimedia) 
+desarrallodo por:"
+label_settings = SubResource("LabelSettings_rnov5")
+horizontal_alignment = 1
+
+[node name="Label" type="Label" parent="CreditosBotones"]
+layout_mode = 2
+text = "-Esther Cristina Daza Matamoros 
+-Alan Mauricio Fernández Calleja"
+label_settings = SubResource("LabelSettings_vdi1b")
+horizontal_alignment = 1
+
+[node name="Button" type="Button" parent="CreditosBotones"]
+layout_mode = 2
+theme_override_fonts/font = ExtResource("3_pxt4k")
+theme_override_font_sizes/font_size = 45
+theme_override_styles/normal = SubResource("StyleBoxFlat_ebbob")
+text = "Regresar"
+
+[connection signal="pressed" from="CreditosBotones/Button" to="CreditosBotones" method="_on_button_pressed"]
